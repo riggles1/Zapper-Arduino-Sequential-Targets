@@ -1,4 +1,4 @@
-# Zapper-Arduino
+# Zapper+2XGamepad-Arduino-Adapter
 NES Zapper USB adapter, Arduino script and build instructions.
 
 This NES Zapper USB adapter is meant to be used with a CRT (CRTEmudriver for PC, RGBScart hat for Pi4+Pi5), RetroArch's FCEumm core and modified ROMs using Alexey's delay patches: https://neslcdmod.com/roms/
