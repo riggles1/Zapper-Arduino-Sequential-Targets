@@ -6,7 +6,7 @@ This NES Zapper USB adapter is meant to be used with a CRT display (CRTEmudriver
 This doesn't seem to work consistently with standalone FCEUX, seems to be related to emulation refresh mismatches causing inconsistencies, RA gets around this by adjusting either game speed or CRT refreshrate (CRTSwitchres) to match ~60.1Hz. If the photo-diode is replaced with one that isn't picky about the target light needing to strobe at ~15kHz it's possible to make the Zapper work with modern TVs as well.
 
 Video of the Zapper adapter in action: https://i.imgur.com/D6HUQmy.mp4
-The results are perfect and have been tested extensively, the zapper never misses the target it's shooting at, multi targets work without a hitch as well.
+The results are perfect and have been tested extensively, the zapper never misses the target it's shooting at, multi targets work without a hitch.
 
 About the .ino script:
 There's a hold function for the light sensor to smooth out <1 frame jittering, it holds the light output for a few ms as soon the Zapper diode senses light emitted from a CRT. The de-bounce also only applies to the trigger. There's also a failsafe that prevents the adapter from outputting a constantly held input when the Zapper is unplugged from the adapter. Making it possible to have the same adapter port work with NES controllers.  
