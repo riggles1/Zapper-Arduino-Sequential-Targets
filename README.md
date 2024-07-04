@@ -25,7 +25,7 @@ When flashing the .ino to the Arduino the Joystick2.h and Keyboard.h libraries h
 
 The part of the script that converts NES controllers was taken from here https://github.com/mcgurk/Arduino-USB-HID-RetroJoystickAdapter
 The NES ports get recognized as their own controller devices in Windows and Linux. For Linux (or Raspberry Pi) in order for both NES controllers to get
-recognized you'll have to edit cmdline.txt and add ```usbhid.quirks=0x2341:0x8037:0x040``` to the very end of line, without adding more lines of script.
+recognized you'll have to edit cmdline.txt and add ```usbhid.quirks=0x2341:0x8037:0x040``` to the very end of the line, without adding more lines of script.
 This is explained in detail in the above HID RetroJoystickAdapter Git.
 
 For use on a Raspberry Pi4 with an RGBPi/ScartRGB hat, use the RGBPi image together with the RGBPi-Extras toolset https://github.com/forkymcforkface/RGBPi-Extra
