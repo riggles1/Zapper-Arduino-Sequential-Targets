@@ -17,5 +17,9 @@ In the FCEumm core options you'll want to set the Zapper mode to "Sequential Tar
 
 Build instructions for the Arduino Pro Micro: ![Wiring Pro Micro](https://github.com/riggles1/Zapper-Arduino/assets/28061895/e2a1ea58-799b-46c6-9e81-b1e442ca34de)
 
+The part of the script that converts NES controllers was taken from here https://github.com/mcgurk/Arduino-USB-HID-RetroJoystickAdapter
+The NES ports get recognized as their own controller devices in Windows and Linux. For Linux (or Raspberry Pi) you'll have to edit cmdline.txt and add ```usbhid.quirks=0x2341:0x8037:0x040``` to the end of the single line, without adding more lines of scripts.
+
+
 
 
