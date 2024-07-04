@@ -15,6 +15,7 @@ The Zapper outputs "r" for the trigger and "t" for the light sensor and is recog
 With the patched NES ROMs you'll set 1.0 frames of delay on the title screen, like shown in this example: https://imgur.com/sequential-targets-ra-crtswitchres-fceumm-with-arduino-zapper-adapter-1-frame-of-input-lag-D6HUQmy 
 In the FCEumm core options you'll want to set the Zapper mode to "Sequential Targets", "Invert" enabled for both the "Zapper Trigger signal" and "Sensor Signal". Then in the RA Quick Menu Controls set the Port 2 controller device to Zapper.
 
-Build instructions for the Arduino Pro Micro:
+Build instructions for the Arduino Pro Micro: ![Wiring Pro Micro](https://github.com/riggles1/Zapper-Arduino/assets/28061895/e2a1ea58-799b-46c6-9e81-b1e442ca34de)
+
 
 
