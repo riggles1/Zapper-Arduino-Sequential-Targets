@@ -1,2 +1,2 @@
 # Zapper-Arduino
-NES Zapper adapter Arduino script and build instructions
+NES Zapper USB adapter, Arduino script and build instructions.
