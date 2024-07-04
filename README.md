@@ -8,7 +8,7 @@ Video of the Zapper adapter in action: https://i.imgur.com/D6HUQmy.mp4
 The results are perfect and have been tested extensively, the zapper never misses the target it's shooting at, multi targets work without a hitch as well.
 
 About the .ino script:
-There's a hold function for the light sensor to smooth out <1 frame jittering, it holds the light output for a few ms as soon the Zapper diode senses light emitted from a CRT. The de-bounce also only applies to the trigger. There's also a failsafe that prevents the adapter from outputting a constantly held input when the Zapper is unplugged from the adapter. Making it possible to have the adapter port work with NES controllers as well.  
+There's a hold function for the light sensor to smooth out <1 frame jittering, it holds the light output for a few ms as soon the Zapper diode senses light emitted from a CRT. The de-bounce also only applies to the trigger. There's also a failsafe that prevents the adapter from outputting a constantly held input when the Zapper is unplugged from the adapter. Making it possible to have the same adapter port work with NES controllers.  
 
 In RetroArch you'll want to optimize lag down to 1 frame, with CRTEmudriver you'll want to follow the tutorial in the description of this video to set it up: https://youtu.be/Fdo5z1mQ748
 Configs for RA are included in there. If setting the configs yourself you'll likely want the video driver to be set to d3d11, ```video_max_swapchain_images = "2"```, ```video_swap_interval = "1"```, ```video_waitable_swapchains = "true"```, the goal is to bring down the input lag down to a single frame, without the use of runahead.
