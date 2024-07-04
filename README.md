@@ -4,7 +4,7 @@ NES Zapper USB adapter, Arduino script and build instructions.
 This NES Zapper USB adapter is meant to be used with a CRT (CRTEmudriver for PC, RGBScart hat for Pi4+Pi5), RetroArch's FCEumm core and modified ROMs using Alexey's delay patches: https://neslcdmod.com/roms/
 This doesn't seem to work well with standalone FCEUX, seems to be related to emulation refresh mismatches causing inconsistencies, RA gets around this by adjusting either game speed or CRT refreshrate (CRTSwitchres) to match ~60.1Hz. Without modifying the Zapper itself with a new photo diode it won't react to light coming from anything but ~15kHz CRT's.
 
-Video of the adapter in action: https://i.imgur.com/D6HUQmy.mp4) 
+Video of the adapter in action: https://i.imgur.com/D6HUQmy.mp4
 
 The .ino script has a hold function for the light sensor to smooth out <1 frame jittering so it holds the light output for a few ms as the Zapper diode senses light emitted from a CRT. The Trigger has an anti-bounce
 and there's a failsafe that prevents the adapter from outputting a constantly held trigger if the Zapper is unplugged from the adapter. Making it possible to have the adapter port work with regular NES controllers as well.  
