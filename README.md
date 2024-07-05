@@ -20,7 +20,7 @@ The device is at the same time recognized as two separate gamepad devices for co
 With the patched NES ROMs you'll set 1.0 frames of delay on the title screen, like shown in the video example. If the emulation input lag of your setup isn't optimized down to 1 frame you'll end up shooting the duck you weren't pointing at in Duck Hunt's Game B, or simply miss.
 In the FCEumm core options the Zapper mode has to be set to "Sequential Targets", "Invert" enabled for both the "Zapper Trigger signal" and "Sensor Signal". Then in the RA Quick Menu Controls set the Port 2 controller device to Zapper.
 
-Build instructions for the Arduino Pro Micro: [wiring](https://github.com/riggles1/Zapper-Arduino/assets/28061895/d5eac927-2aee-4e5c-bb13-d61c5fa8f9ed)
+Build instructions for the Arduino Pro Micro: ![Wiring Pro Micro](https://github.com/riggles1/Zapper-Arduino/assets/28061895/2d115be7-c98b-47f6-8111-9f38a2a70c5d)
 When flashing the .ino to the Arduino the Joystick2.h and Keyboard.h libraries have to be installed first.
 
 The part of the script that converts NES controllers was taken from here https://github.com/mcgurk/Arduino-USB-HID-RetroJoystickAdapter
