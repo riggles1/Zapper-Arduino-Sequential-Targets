@@ -1,7 +1,7 @@
 # Zapper+2xControllers-Arduino-Adapter
 NES Zapper+Controllers USB adapter, Arduino script and build instructions.
 
-This NES Zapper USB adapter is meant to be used with a CRT display (CRTEmudriver for PC, RGBScart hat for Pi4/Pi5), the RetroArch's FCEumm core and ROMs modified with Alexey's delay patches: https://neslcdmod.com/roms/
+This NES Zapper USB adapter is meant to be used with a CRT display (CRTEmudriver for PC, RGBPi Scart hat for Pi4), the RetroArch's FCEumm core and ROMs modified with Alexey's delay patches: https://neslcdmod.com/roms/
 
 This doesn't seem to work consistently with standalone FCEUX, seems to be related to emulation refresh mismatches causing inconsistencies, RA gets around this by adjusting either game speed or CRT refreshrate (CRTSwitchres) to match ~60.1Hz. If the photo-diode is replaced with one that isn't picky about the target light needing to strobe at ~15kHz it's possible to make the Zapper work with modern TVs as well.
 
@@ -28,8 +28,10 @@ The NES ports get recognized as their own controller devices in Windows and Linu
 recognized you'll have to edit cmdline.txt and add ```usbhid.quirks=0x2341:0x8037:0x040``` to the very end of the line, without adding more lines of script.
 This is explained in detail in the above HID RetroJoystickAdapter Git.
 
-For use on a Raspberry Pi4 (Avoid Pi5 as it has noisy GPIO, wait for an HDMI DAC solution for it) with an RGBPi/ScartRGB hat, use the RGBPi image together with the RGBPi-Extras toolset https://github.com/forkymcforkface/RGBPi-Extra
-to get the NES Zapper functionality (as well as many other features).
+For use on a Raspberry Pi4 with an RGBPi/ScartRGB hat, use the RGBPi image together with the RGBPi-Extras toolset https://github.com/forkymcforkface/RGBPi-Extra
+to get the NES Zapper functionality (as well as many other features). (Works with Pi5, however as it has noisy GPIO, so wait for an HDMI DAC solution for it)
+
+
 
 
 
