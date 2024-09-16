@@ -28,8 +28,8 @@ The NES ports get recognized as their own controller devices in Windows and Linu
 recognized you'll have to edit cmdline.txt and add ```usbhid.quirks=0x2341:0x8037:0x040``` to the very end of the line, without adding more lines of script.
 This is explained in detail in the above HID RetroJoystickAdapter Git.
 
-For use on a Raspberry Pi4 with an RGBPi/ScartRGB hat, use the RGBPi image together with the RGBPi-Extras toolset https://github.com/forkymcforkface/RGBPi-Extra
-to get the NES Zapper functionality (as well as many other features). (Works with Pi5, however as it has noisy GPIO, so wait for an HDMI DAC solution for it)
+For use on a Raspberry Pi4 with an RGBPi hat, use the RGBPi image together with the RGBPi-Extras toolset https://github.com/forkymcforkface/RGBPi-Extra
+to get the NES Zapper functionality (as well as many other features). Everything there is preconfigured to work with this adapter, just install the Zapper package in Extras. (Works with Pi5, however as it has noisy GPIO, so wait for an HDMI DAC solution for it)
 
 
 
