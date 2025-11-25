@@ -11,11 +11,11 @@ const uint8_t inputPinsPort2[] = { 2, 3, 4 };
 #if defined(NES) 
 #define CLOCK1 inputPinsPort1[0]
 #define LATCH1 inputPinsPort1[1]
-#define DATA1 inputPinsPort1[2]
+#define DATA1  inputPinsPort1[2]
 
 #define CLOCK2 inputPinsPort2[0]
 #define LATCH2 inputPinsPort2[1]
-#define DATA2 inputPinsPort2[2]
+#define DATA2  inputPinsPort2[2]
 
 #ifdef NES
 #define BITS 8
@@ -28,6 +28,26 @@ uint8_t newStatusPort1[BITS];
 uint8_t lastStatusPort2[BITS];
 uint8_t newStatusPort2[BITS];
 
+
+// Direct port bitmasks for NES lines 
+uint8_t latch1_bit;
+uint8_t clock1_bit;
+uint8_t data1_bit;
+
+uint8_t latch2_bit;
+uint8_t clock2_bit;
+uint8_t data2_bit;
+
+// Port registers for much faster I/O 
+volatile uint8_t *latch1_port;
+volatile uint8_t *clock1_port;
+volatile uint8_t *data1_pin;
+
+volatile uint8_t *latch2_port;
+volatile uint8_t *clock2_port;
+volatile uint8_t *data2_pin;
+
+
 void setupJoysticks() {
   pinMode(LATCH1, OUTPUT);
   pinMode(CLOCK1, OUTPUT);
@@ -35,13 +55,35 @@ void setupJoysticks() {
   pinMode(LATCH2, OUTPUT);
   pinMode(CLOCK2, OUTPUT);
   pinMode(DATA2, INPUT_PULLUP);
+
+  // Cache direct port registers and masks for faster speed 
+  latch1_port = portOutputRegister(digitalPinToPort(LATCH1));
+  clock1_port = portOutputRegister(digitalPinToPort(CLOCK1));
+  data1_pin   = portInputRegister(digitalPinToPort(DATA1));
+
+  latch1_bit  = digitalPinToBitMask(LATCH1);
+  clock1_bit  = digitalPinToBitMask(CLOCK1);
+  data1_bit   = digitalPinToBitMask(DATA1);
+
+  latch2_port = portOutputRegister(digitalPinToPort(LATCH2));
+  clock2_port = portOutputRegister(digitalPinToPort(CLOCK2));
+  data2_pin   = portInputRegister(digitalPinToPort(DATA2));
+
+  latch2_bit  = digitalPinToBitMask(LATCH2);
+  clock2_bit  = digitalPinToBitMask(CLOCK2);
+  data2_bit   = digitalPinToBitMask(DATA2);
 }
 
-#define latchlow digitalWrite(LATCH1, LOW); digitalWrite(LATCH2, LOW);
-#define latchhigh digitalWrite(LATCH1, HIGH); digitalWrite(LATCH2, HIGH)
-#define clocklow digitalWrite(CLOCK1, LOW); digitalWrite(CLOCK2, LOW)
-#define clockhigh digitalWrite(CLOCK1, HIGH); digitalWrite(CLOCK2, HIGH)
-#define wait delayMicroseconds(12)
+
+// Optimized latch/clock macros using direct port writes 
+#define latchlow   (*latch1_port &= ~latch1_bit, *latch2_port &= ~latch2_bit)
+#define latchhigh  (*latch1_port |=  latch1_bit, *latch2_port |=  latch2_bit)
+#define clocklow   (*clock1_port &= ~clock1_bit, *clock2_port &= ~clock2_bit)
+#define clockhigh  (*clock1_port |=  clock1_bit, *clock2_port |=  clock2_bit)
+
+// Faster delay
+#define wait delayMicroseconds(2)
+
 
 void readJoysticks() {
   latchlow;
@@ -50,15 +92,18 @@ void readJoysticks() {
   wait;
   latchlow;
 
+  // Optimized NES shift-register read loop 
   for (int i = 0; i < BITS; i++) {
-    newStatusPort1[i] = digitalRead(DATA1);
-    newStatusPort2[i] = digitalRead(DATA2);
+    newStatusPort1[i] = ((*data1_pin & data1_bit) ? 1 : 0);
+    newStatusPort2[i] = ((*data2_pin & data2_bit) ? 1 : 0);
+
     clockhigh;
     wait;
     clocklow;
     wait;
   }
 }
+
 
 void interpretJoystickState(uint8_t j, uint8_t *status) {
   Joystick[j].setYAxis(0);
@@ -76,10 +121,12 @@ void interpretJoystickState(uint8_t j, uint8_t *status) {
 }
 #endif
 
+
+
 // Keyboard Definitions 
 // Define the button and light pin
 const int buttonPin = 5; // Pin 5 
-const int lightPin = 6;  // Pin 6 
+const int lightPin  = 6; // Pin 6 
 
 // Variables to hold the state and timing of button 2
 bool button2WasPressed = false;
@@ -141,11 +188,28 @@ void loop() {
   bool button1State = digitalRead(buttonPin) == LOW;
   bool button2State = digitalRead(lightPin) == HIGH;
 
+  // 5 ms debounce for Button 1
+  static bool lastRawButton1 = false;
+  static unsigned long lastDebounceTime1 = 0;
+
+  bool rawButton1 = digitalRead(buttonPin) == LOW;
+
+  if (rawButton1 != lastRawButton1) {
+      lastDebounceTime1 = millis(); // debounce timer start
+  }
+
+  if (millis() - lastDebounceTime1 >= 5) { // debounce duration
+      button1State = rawButton1; // stable state becomes actual state
+  }
+
+  lastRawButton1 = rawButton1;
+
   // Track if button 1 has been pressed at least once
   if (button1State) {
     button1HasBeenPressed = true;
   }
-  // Handle 'R' key button 1 with 12ms hold time
+
+  // Handle 'R' key button 1 with 16ms hold time
   static unsigned long button1PressStartTime = 0;
   static bool button1Held = false;
 
@@ -153,7 +217,6 @@ void loop() {
     button1PressStartTime = millis();
     button1Held = true;
     Keyboard.press('r');
-    delay(1); // Small delay to prevent bouncing for button1
   } else if (button1Held && (millis() - button1PressStartTime >= 16)) {
     Keyboard.release('r');
     button1Held = false;
